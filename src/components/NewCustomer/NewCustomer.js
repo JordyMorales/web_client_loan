@@ -4,7 +4,7 @@ import axios from "axios";
 
 const URL = "http://localhost:8080/api";
 
-export default class NewClient extends Component {
+export default class NewCustomer extends Component {
   state = {
     email: "",
     amount: "",
@@ -15,7 +15,7 @@ export default class NewClient extends Component {
     await this.setState({ [name]: value });
   };
 
-  submitLoan = async () => {
+  submitLoan = async (URL) => {
     const { email, amount } = this.state;
     const resLoan = await axios({
       method: "post",
@@ -63,7 +63,7 @@ export default class NewClient extends Component {
               />
             </Form.Group>
             <Button
-              onClick={() => this.submitLoan()}
+              onClick={() => this.submitLoan(URL)}
               content="Save"
               color="orange"
             />

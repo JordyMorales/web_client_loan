@@ -3,7 +3,7 @@ import { Container, Header, Segment } from "semantic-ui-react";
 import Navbar from "../../components/Navbar/Navar";
 import Search from "../../components/Search/Search";
 
-const Client = () => {
+const Customer = () => {
   return (
     <div>
       <Navbar />
@@ -21,4 +21,4 @@ const Client = () => {
   );
 };
 
-export default Client;
+export default Customer;
