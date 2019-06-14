@@ -30,7 +30,6 @@ const NewCustomer = props => {
               required
             />
           </Form.Group>
-
           <Button
             onClick={props.clickHandler}
             content="Save"

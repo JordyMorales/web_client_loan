@@ -5,9 +5,7 @@ import Search from "../../components/Search/Search";
 import Loan from "../../components/Loan/Loan";
 import Payment from "../../components/Payment/Payment";
 import SearchResult from "../../components/SearchResult/SearchResult";
-import { GET, POST } from "../../utils";
-
-const URL = "http://localhost:8080/api";
+import { getInfo, requestLoan, payLoan } from "../../utils/apiClient";
 
 export default class Customer extends Component {
   constructor(props) {
@@ -27,13 +25,13 @@ export default class Customer extends Component {
 
   submitSearch = async () => {
     const { email } = this.state;
-    const url = `${URL}/information?email=${email}`;
-    const resp = await GET(url);
+    const resp = await getInfo(email);
+    debugger;
     if (resp.status === 200) {
       this.setState({ debt: resp.data.amount, userMatch: true });
     }
     if (resp.status === 204) {
-      await this.setState({
+      this.setState({
         debt: undefined,
         userMatch: false,
         pay: "",
@@ -45,36 +43,34 @@ export default class Customer extends Component {
 
   submitLoan = async () => {
     const { email, newLoan } = this.state;
-    const url = `${URL}/loan`;
-    const resp = await POST(url, email, newLoan);
+    const resp = await requestLoan(email, newLoan);
     if (resp.status === 201) {
-      await this.setState({ debt: resp.data.debt, pay: "", newLoan: "" });
+      this.setState({ debt: resp.data.debt, pay: "", newLoan: "" });
       alert("successful loan");
       return;
     }
     if (resp.status === 200) {
-      await this.setState({ pay: "", newLoan: "" });
+      this.setState({ pay: "", newLoan: "" });
       alert(resp.data.message);
     }
   };
 
   submitPay = async () => {
     const { email, pay, debt } = this.state;
-    const url = `${URL}/payments`;
     if (pay <= debt) {
-      const resp = await POST(url, email, pay);
+      const resp = await payLoan(email, pay);
       if (resp.status === 201) {
-        await this.setState({ debt: resp.data.debt, pay: "", newLoan: "" });
+        this.setState({ debt: resp.data.debt, pay: "", newLoan: "" });
         alert(resp.data.message);
         return;
       }
       if (resp.status === 200) {
         alert(resp.data.message);
-        await this.setState({ pay: "", newLoan: "" });
+        this.setState({ pay: "", newLoan: "" });
       }
     } else {
       alert("Amount exceeds debt");
-      await this.setState({ pay: "", newLoan: "" });
+      this.setState({ pay: "", newLoan: "" });
     }
   };
 
@@ -102,7 +98,6 @@ export default class Customer extends Component {
                     changehandler={this.handleFieldChange}
                   />
                 </Grid.Column>
-
                 {userMatch && (
                   <Grid.Column>
                     <SearchResult value={this.state.debt} />

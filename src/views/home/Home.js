@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { Container, Header, Segment } from "semantic-ui-react";
 import Navbar from "../../components/Navbar/Navar";
 import NewCustomer from "../../components/NewCustomer/NewCustomer";
-import { POST } from "../../utils";
-
-const URL = "http://localhost:8080/api";
+import { requestLoan } from "../../utils/apiClient";
 
 export default class Home extends Component {
   constructor(props) {
@@ -21,17 +19,16 @@ export default class Home extends Component {
 
   submitLoan = async () => {
     const { email, amount } = this.state;
-    const url = `${URL}/loan`;
     if (amount <= 50) {
-      const resp = await POST(url, email, amount);
+      const resp = await requestLoan(email, amount);
       if (resp.status === 201) {
-        await this.setState({ email: "", amount: "" });
+        this.setState({ email: "", amount: "" });
         resp.data.new
           ? alert("New user created successfully")
           : alert("Existing customer, successful loan!");
       }
     } else {
-      await this.setState({ amount: "" });
+      this.setState({ amount: "" });
       alert("We cannot accept loans over 50$ on first loan");
     }
   };
