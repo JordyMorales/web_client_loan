@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Form, Segment } from "semantic-ui-react";
 
 const NewCustomer = props => {
+  const { email, amount } = props.values;
   return (
     <div style={{ marginTop: "3%" }}>
       <Segment color="orange">
@@ -11,7 +12,7 @@ const NewCustomer = props => {
               fluid
               name="email"
               label="Email"
-              value={props.values.email}
+              value={email}
               onChange={props.changehandler}
               placeholder="Enter your email"
               type="email"
@@ -21,7 +22,7 @@ const NewCustomer = props => {
               fluid
               name="amount"
               label="Amount to loan"
-              value={props.values.amount}
+              value={amount}
               onChange={props.changehandler}
               placeholder="Enter the loan amount"
               type="number"
@@ -29,7 +30,13 @@ const NewCustomer = props => {
               required
             />
           </Form.Group>
-          <Button onClick={props.clickHandler} content="Save" color="orange" />
+
+          <Button
+            onClick={props.clickHandler}
+            content="Save"
+            color="orange"
+            disabled={!email && !amount}
+          />
         </Form>
       </Segment>
     </div>

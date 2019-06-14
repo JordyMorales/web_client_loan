@@ -18,7 +18,12 @@ const Search = props => {
             required
           />
         </Form.Group>
-        <Button onClick={props.clickHandler} content="Search" color="grey" />
+        <Button
+          onClick={props.clickHandler}
+          content="Search"
+          color="grey"
+          disabled={!props.value}
+        />
       </Form>
     </Segment>
   );

@@ -16,7 +16,12 @@ const Loan = props => {
             type="number"
           />
         </Form.Group>
-        <Button onClick={props.clickHandler} content="apply" positive />
+        <Button
+          onClick={props.clickHandler}
+          content="apply"
+          positive
+          disabled={!props.value}
+        />
       </Form>
     </Segment>
   );

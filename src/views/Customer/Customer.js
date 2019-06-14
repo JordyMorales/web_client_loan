@@ -5,7 +5,7 @@ import Search from "../../components/Search/Search";
 import Loan from "../../components/Loan/Loan";
 import Payment from "../../components/Payment/Payment";
 import SearchResult from "../../components/SearchResult/SearchResult";
-import axios from "axios";
+import { GET, POST } from "../../utils";
 
 const URL = "http://localhost:8080/api";
 
@@ -27,11 +27,12 @@ export default class Customer extends Component {
 
   submitSearch = async () => {
     const { email } = this.state;
-    const res = await axios(`${URL}/information?email=${email}`);
-    if (res.status === 200) {
-      this.setState({ debt: res.data.amount, userMatch: true });
+    const url = `${URL}/information?email=${email}`;
+    const resp = await GET(url);
+    if (resp.status === 200) {
+      this.setState({ debt: resp.data.amount, userMatch: true });
     }
-    if (res.status === 204) {
+    if (resp.status === 204) {
       await this.setState({
         debt: undefined,
         userMatch: false,
@@ -44,43 +45,31 @@ export default class Customer extends Component {
 
   submitLoan = async () => {
     const { email, newLoan } = this.state;
-    const resLoan = await axios({
-      method: "post",
-      url: `${URL}/loan`,
-      data: {
-        email,
-        amount: Number(newLoan)
-      }
-    });
-    if (resLoan.status === 201) {
-      await this.setState({ debt: resLoan.data.debt, pay: "", newLoan: "" });
+    const url = `${URL}/loan`;
+    const resp = await POST(url, email, newLoan);
+    if (resp.status === 201) {
+      await this.setState({ debt: resp.data.debt, pay: "", newLoan: "" });
       alert("successful loan");
       return;
     }
-    if (resLoan.status === 200) {
+    if (resp.status === 200) {
       await this.setState({ pay: "", newLoan: "" });
-      alert(resLoan.data.message);
+      alert(resp.data.message);
     }
   };
 
   submitPay = async () => {
     const { email, pay, debt } = this.state;
+    const url = `${URL}/payments`;
     if (pay <= debt) {
-      const resPay = await axios({
-        method: "post",
-        url: `${URL}/payments`,
-        data: {
-          email,
-          amount: Number(pay)
-        }
-      });
-      if (resPay.status === 201) {
-        await this.setState({ debt: resPay.data.debt, pay: "", newLoan: "" });
-        alert(resPay.data.message);
+      const resp = await POST(url, email, pay);
+      if (resp.status === 201) {
+        await this.setState({ debt: resp.data.debt, pay: "", newLoan: "" });
+        alert(resp.data.message);
         return;
       }
-      if (resPay.status === 200) {
-        alert(resPay.data.message);
+      if (resp.status === 200) {
+        alert(resp.data.message);
         await this.setState({ pay: "", newLoan: "" });
       }
     } else {

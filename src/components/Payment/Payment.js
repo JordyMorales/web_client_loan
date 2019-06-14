@@ -17,7 +17,12 @@ const Payment = props => {
               type="number"
             />
           </Form.Group>
-          <Button onClick={props.clickHandler} content="pay" primary />
+          <Button
+            onClick={props.clickHandler}
+            content="pay"
+            primary
+            disabled={!props.value}
+          />
         </Form>
       </Segment>
     </div>

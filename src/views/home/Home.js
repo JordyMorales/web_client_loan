@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Header, Segment } from "semantic-ui-react";
 import Navbar from "../../components/Navbar/Navar";
 import NewCustomer from "../../components/NewCustomer/NewCustomer";
-import axios from "axios";
+import { POST } from "../../utils";
 
 const URL = "http://localhost:8080/api";
 
@@ -21,18 +21,12 @@ export default class Home extends Component {
 
   submitLoan = async () => {
     const { email, amount } = this.state;
+    const url = `${URL}/loan`;
     if (amount <= 50) {
-      const resLoan = await axios({
-        method: "post",
-        url: `${URL}/loan`,
-        data: {
-          email,
-          amount: Number(amount)
-        }
-      });
-      if (resLoan.status === 201) {
+      const resp = await POST(url, email, amount);
+      if (resp.status === 201) {
         await this.setState({ email: "", amount: "" });
-        resLoan.data.new
+        resp.data.new
           ? alert("New user created successfully")
           : alert("Existing customer, successful loan!");
       }
