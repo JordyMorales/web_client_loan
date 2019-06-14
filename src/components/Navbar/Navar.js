@@ -1,14 +1,15 @@
 import React from "react";
-import { Menu, Sticky } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 
-
-const Navbar = props => {
+const Navbar = () => {
   return (
-    <Sticky>
-      <Menu inverted style={{ margin: 0 }}>
-        <Menu.Item href="/">Home</Menu.Item>
-      </Menu>
-    </Sticky>
+    <Menu inverted style={{ margin: 0 }}>
+      <Menu.Item>
+        <img src="https://react.semantic-ui.com/logo.png" />
+      </Menu.Item>
+      <Menu.Item href="/">Home</Menu.Item>
+      <Menu.Item href="/customer">Customer</Menu.Item>
+    </Menu>
   );
 };
 export default Navbar;
