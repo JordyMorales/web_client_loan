@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 
-import Home from "../views/home/Home";
-import Customer from "../views/Customer";
+import Home from "../views/Home/Home";
+import Customer from "../views/Customer/Customer";
 
 export default () => (
   <Router>
