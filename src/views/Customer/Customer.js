@@ -26,7 +26,6 @@ export default class Customer extends Component {
   submitSearch = async () => {
     const { email } = this.state;
     const resp = await getInfo(email);
-    debugger;
     if (resp.status === 200) {
       this.setState({ debt: resp.data.amount, userMatch: true });
     }
