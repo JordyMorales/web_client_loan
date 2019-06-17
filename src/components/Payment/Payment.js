@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 
-const Payment = props => {
+const Payment = ({ value, changehandler, clickHandler }) => {
   return (
     <div>
       <Segment color="blue">
@@ -11,17 +11,17 @@ const Payment = props => {
               fluid
               label="Pay debt"
               name="pay"
-              value={props.value}
-              onChange={props.changehandler}
+              value={value}
+              onChange={changehandler}
               placeholder="Amount..."
               type="number"
             />
           </Form.Group>
           <Button
-            onClick={props.clickHandler}
+            onClick={clickHandler}
             content="pay"
             primary
-            disabled={!props.value}
+            disabled={!value}
           />
         </Form>
       </Segment>

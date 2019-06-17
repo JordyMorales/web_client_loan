@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 
-const Search = props => {
+const Search = ({ value, changehandler, clickHandler }) => {
   return (
     <Segment color="grey">
       <Form>
@@ -10,8 +10,8 @@ const Search = props => {
             fluid
             label="First name"
             name="email"
-            value={props.value}
-            onChange={props.changehandler}
+            value={value}
+            onChange={changehandler}
             icon="search"
             placeholder="Search by email"
             type="email"
@@ -19,10 +19,10 @@ const Search = props => {
           />
         </Form.Group>
         <Button
-          onClick={props.clickHandler}
+          onClick={clickHandler}
           content="Search"
           color="grey"
-          disabled={!props.value}
+          disabled={!value}
         />
       </Form>
     </Segment>

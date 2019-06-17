@@ -1,8 +1,11 @@
 import React from "react";
 import { Button, Form, Segment } from "semantic-ui-react";
 
-const NewCustomer = props => {
-  const { email, amount } = props.values;
+const NewCustomer = ({
+  values: { email, amount },
+  changehandler,
+  clickHandler
+}) => {
   return (
     <div style={{ marginTop: "3%" }}>
       <Segment color="orange">
@@ -13,7 +16,7 @@ const NewCustomer = props => {
               name="email"
               label="Email"
               value={email}
-              onChange={props.changehandler}
+              onChange={changehandler}
               placeholder="Enter your email"
               type="email"
               required
@@ -23,7 +26,7 @@ const NewCustomer = props => {
               name="amount"
               label="Amount to loan"
               value={amount}
-              onChange={props.changehandler}
+              onChange={changehandler}
               placeholder="Enter the loan amount"
               type="number"
               max="50"
@@ -31,7 +34,7 @@ const NewCustomer = props => {
             />
           </Form.Group>
           <Button
-            onClick={props.clickHandler}
+            onClick={clickHandler}
             content="Save"
             color="orange"
             disabled={!email && !amount}
